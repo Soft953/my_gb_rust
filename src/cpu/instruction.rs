@@ -8,11 +8,11 @@ pub struct Instruction {
     pub cycles: u8,
     pub n_args: u8,
     pub _str: String,
-    pub execute: fn(&mut CPU, Vec<String>),
+    pub execute: fn(&mut CPU, &Vec<u8>),
 }
 
 impl Instruction {
-    pub fn new(op_code: u8, cycles: u8, n_args: u8, _str: &str, execute: fn(&mut CPU, Vec<String>)) -> Instruction {
+    pub fn new(op_code: u8, cycles: u8, n_args: u8, _str: &str, execute: fn(&mut CPU, &Vec<u8>)) -> Instruction {
         Instruction {
             op_code: op_code,
             cycles: cycles,

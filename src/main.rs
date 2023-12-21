@@ -1,6 +1,9 @@
 mod bootrom;
 // mod instruction;
 mod cpu;
+mod memory;
+
+use std::fs;
 
 
 // will parse the rom file to a list of cpu operation to execute
@@ -12,6 +15,14 @@ fn parse_rom(rom: &str) -> Vec<String> {
 
     return v;
 }
+
+
+// fn read_rom_file(file_path: &str) -> &[u8] {
+//     let contents = fs::read_to_string(file_path)
+//         .expect("Could not read rom file");
+
+//     return contents.as_bytes();
+// }
 
 fn main() {
     // basic emulator loop
@@ -31,14 +42,36 @@ fn main() {
     // println!("{}", i._str);
 
     let mut cpu = cpu::CPU::new();
-    println!("{}", cpu.to_string());
-    (cpu.instruction_set.get(&0x06).unwrap().execute)(&mut cpu, vec!["08".to_string()]);
-    println!("{}", cpu.to_string());
+    // println!("{}", cpu.to_string());
+    // (cpu.instruction_set.get(&0x06).unwrap().execute)(&mut cpu, &vec![0x08]);
+    // println!("{}", cpu.to_string());
 
 
     
     // Iterate over everything.
-    for (op_code, instruction) in cpu.instruction_set {
-        println!("{op_code}: \"{}\"", instruction._str);
+    // for (op_code, instruction) in cpu.instruction_set {
+    //     println!("{op_code}: \"{}\"", instruction._str);
+    // }
+
+    let bytes = fs::read("/home/bourgh_s/my_gb_rust/tests/assets/default_rom.gb")
+        .expect("Could not read rom file");
+
+    cpu.memory.load_rom(&bytes);
+
+    // println!("{}", cpu.memory.to_string());
+
+    // let bytes = contents.as_bytes();
+
+    // let mut counter = 0;
+    loop {
+        // if counter > 10 {
+        //     break;
+        // }
+        // println!("{}", bytes[counter]);
+        cpu.execute_instruction();
+        // &bytes[counter], &[].to_vec());
+        println!("{}", cpu.to_string());
+        // counter+=1;
     }
+
 }
