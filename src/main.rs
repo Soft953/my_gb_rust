@@ -53,7 +53,7 @@ fn main() {
     //     println!("{op_code}: \"{}\"", instruction._str);
     // }
 
-    let bytes = fs::read("/home/bourgh_s/my_gb_rust/tests/assets/default_rom.gb")
+    let bytes = fs::read("/home/bourgh_s/my_gb_rust/tests/assets/dmg_boot.bin")
         .expect("Could not read rom file");
 
     cpu.memory.load_rom(&bytes);

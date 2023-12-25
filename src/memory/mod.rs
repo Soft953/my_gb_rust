@@ -28,6 +28,12 @@ impl Memory {
         return self.mem_space[pointer];
     }
 
+    pub fn write_bytes(&mut self, pointer: usize, data: u8) {
+        if pointer < MEMORY_SIZE {
+            self.mem_space[pointer] = data;
+        }
+    }
+
     pub fn load_rom(&mut self, bytes: &Vec<u8>) {
         if bytes.len() > VRAM {
             println!("Weird, ROM does not fit in memory, size > 8Kb")
@@ -39,6 +45,6 @@ impl Memory {
     }
 
     pub fn to_string(&self) -> String {
-        return format!("Memory | {:x?}", self.mem_space);
+        return format!("Memory | {:#04X?}", self.mem_space);
     }
 }
